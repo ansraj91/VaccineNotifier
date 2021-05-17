@@ -24,11 +24,15 @@ public class App {
 
         Config config = new Config();
         config.setBaseUrl(baseUrl);
-        config.setFilterByAge(18);
+        config.setFilterByAge(45);
         config.setVaccineGreaterThan(0);
         config.setPrintEnabled(true);
         config.setBeepNow(true);
+        config.setBeepFilePath("/Users/anshulkhandelwal/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/2nd.wav");
+        config.setOpenWebPageURL("https://selfregistration.cowin.gov.in/");
+       // config.setDummyResponseObject("/Users/anshulkhandelwal/Documents/Personnal/Projects/VaccineNotifier/src/main/resources/reponse.json");
         config.setSelectedPinCode(list);
+
 
         OkHttpPinger okHttpPinger = new OkHttpPinger(Mode.Actual,config);
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);

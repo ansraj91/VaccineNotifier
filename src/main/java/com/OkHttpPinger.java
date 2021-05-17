@@ -74,11 +74,11 @@ public class OkHttpPinger implements Runnable{
         if(checkPin)
             list.forEach(System.out::println);
 
-            if(config.beepNow && checkPin){
+            if(config.isBeepNow() && checkPin){
 
                 int c =list.size();
                 if(c>0) {
-                     File path =  new File("/Users/anshulkhandelwal/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/2nd.wav");
+                     File path =  new File(config.getBeepFilePath());
                    Runnable r1=  ()->{ try{
                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(path);
                        Clip clip = AudioSystem.getClip();
@@ -95,9 +95,8 @@ public class OkHttpPinger implements Runnable{
 
                    // Toolkit.getDefaultToolkit().beep();
                     Runtime rt = Runtime.getRuntime();
-                    String url = "https://selfregistration.cowin.gov.in/";
                     try {
-                        rt.exec("open " + url);
+                        rt.exec("open " + config.getOpenWebPageURL());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -106,7 +105,7 @@ public class OkHttpPinger implements Runnable{
             vaccineAvailabilitySummaryStream = Optional.of(result);
         }
        if(mode==Mode.Dummy) {
-           File inputJson = new File("/Users/anshulkhandelwal/Documents/Personnal/Projects/VaccineNotifier/src/main/resources/reponse.json");
+           File inputJson = new File(config.getDummyResponseObject());
            BufferedReader br = null;
            try {
                br = new BufferedReader(new FileReader(inputJson));
@@ -142,8 +141,8 @@ public class OkHttpPinger implements Runnable{
 
 
     private Stream<VaccineAvailabilitySummary> checkAvailability(Reponse reponse){
-        Predicate<Session> byAge = s->s.getMinAgeLimit()==this.config.filterByAge;
-        Predicate<Session> isVaccineAvailable = s->s.getAvailableCapacity()>this.config.vaccineGreaterThan;
+        Predicate<Session> byAge = s->s.getMinAgeLimit()==this.config.getFilterByAge();
+        Predicate<Session> isVaccineAvailable = s->s.getAvailableCapacity()>this.config.getVaccineGreaterThan();
 
       return  reponse.getCenters().parallelStream().flatMap(
             c->c.getSessions()
