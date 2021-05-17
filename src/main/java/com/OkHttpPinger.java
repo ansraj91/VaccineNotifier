@@ -59,26 +59,26 @@ public class OkHttpPinger implements Runnable{
 
             if(config.getSelectedPinCode()==null || config.getSelectedPinCode().size()==0){
                 checkPin=true;
-                System.out.println("failing");
+                list.forEach(System.out::println);
             }else {
                 for (Integer a : config.getSelectedPinCode()) {
                     for (VaccineAvailabilitySummary v : list) {
                         if (v.getCenter().getPincode().equals(a)) {
                             checkPin = true;
+
                         }
                     }
                 }
             }
-            if(config.printEnabled && checkPin){
-               list.forEach(System.out::println);
-            }
+
+        if(checkPin)
+            list.forEach(System.out::println);
 
             if(config.beepNow && checkPin){
 
                 int c =list.size();
                 if(c>0) {
                      File path =  new File("/Users/anshulkhandelwal/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/2nd.wav");
-
                    Runnable r1=  ()->{ try{
                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(path);
                        Clip clip = AudioSystem.getClip();

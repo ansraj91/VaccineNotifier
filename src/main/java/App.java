@@ -1,15 +1,9 @@
 import com.Config;
 import com.Mode;
 import com.OkHttpPinger;
-import com.rest.response.Reponse;
-import okhttp3.Response;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -25,8 +19,8 @@ public class App {
         list.add(301404);
         list.add(301405);
         list.add(301403);
-        list.add(301402);
-       // list.add(301001);
+        list.add(301702);
+        list.add(301001);
 
         Config config = new Config();
         config.setBaseUrl(baseUrl);
@@ -38,7 +32,7 @@ public class App {
 
         OkHttpPinger okHttpPinger = new OkHttpPinger(Mode.Actual,config);
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
-        ScheduledFuture<?> scheduledFuture = ses.scheduleAtFixedRate(okHttpPinger, 1,30, TimeUnit.SECONDS);
+        ScheduledFuture<?> scheduledFuture = ses.scheduleAtFixedRate(okHttpPinger, 1,10, TimeUnit.SECONDS);
 
 
        /* while (true) {
